@@ -13,3 +13,14 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
 #endif
+
+//宏输出函数
+#ifdef TS_DEBUG
+#define TS_Log(fmt, ...) NSLog((@"%s," "[lineNum:%d]" fmt) , __FUNCTION__, __LINE__, ##__VA_ARGS__); //带函数名和行数
+#define TS_Log(fmt, ...) NSLog((@"===[lineNum:%d]" fmt), __LINE__, ##__VA_ARGS__);  //带行数
+#define TS_Log(fmt, ...) NSLog((fmt), ##__VA_ARGS__); //不带函数名和行数
+#else
+#define TS_Log(fmt, ...)
+#define TS_Log(fmt, ...)
+#define TS_Log(fmt, ...)
+#endif

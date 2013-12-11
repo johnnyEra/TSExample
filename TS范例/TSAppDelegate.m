@@ -8,16 +8,44 @@
 
 #import "TSAppDelegate.h"
 
+#import "TSFirstViewController.h"
+#import "TSSecondViewController.h"
+#import "TSThirdViewController.h"
+#import "TSFourthViewController.h"
+
 @implementation TSAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+- (void)initTabBarControllerFromApp {
+    
+    TS_Log();
+    // 1
+    UITabBarController* tempTabCtrl = [[UITabBarController alloc]init];
+    self.tabBarCtrl = tempTabCtrl;
+    
+    // 2 部署选项卡
+    NSMutableArray* tempArr = [[NSMutableArray alloc]init];
+    [tempArr addObject:[[UINavigationController alloc]initWithRootViewController:[[TSFirstViewController alloc]init]]];
+    [tempArr addObject:[[UINavigationController alloc]initWithRootViewController:[[TSSecondViewController alloc]init]]];
+    [tempArr addObject:[[UINavigationController alloc]initWithRootViewController:[[TSThirdViewController alloc]init]]];
+    [tempArr addObject:[[UINavigationController alloc]initWithRootViewController:[[TSFourthViewController alloc]init]]];
+    self.tabBarCtrl.viewControllers = tempArr;
+    self.tabArray = tempArr;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    TS_Log();
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    // 1
+    [self initTabBarControllerFromApp];
+    self.window.rootViewController = self.tabBarCtrl;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
